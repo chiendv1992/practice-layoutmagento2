@@ -1,0 +1,59 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <update handle="default_head_blocks"/>
+        <referenceContainer name="header.panel">
+            <block class="Magento\Framework\View\Element\Html\Links" name="header.links">
+                <arguments>
+                    <argument name="css_class" xsi:type="string">header links</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+
+        <referenceBlock name="register-link" remove="true" />           <!--for Create Account Link-->
+        <referenceBlock name="authorization-link" remove="true" />      <!--for Sign In Link  -->
+        <referenceBlock name="wish-list-link" remove="true" />
+
+        <referenceBlock name="header.links">
+            <block class="Magento\Framework\View\Element\Html\Link" name="custom-link">
+                <arguments>
+                    <argument name="label" xsi:type="string" translate="true">About us</argument>
+                    <argument name="path" xsi:type="string" translate="true"></argument>
+                </arguments>
+            </block>
+            <block class="Magento\Framework\View\Element\Html\Link" name="custom-blog">
+                <arguments>
+                    <argument name="label" xsi:type="string" translate="true">Blog</argument>
+                    <argument name="path" xsi:type="string" translate="true"></argument>
+                </arguments>
+            </block>
+            <block class="Magento\Framework\View\Element\Html\Link" name="custom-blogw">
+                <arguments>
+                    <argument name="label" xsi:type="string" translate="true">asaas</argument>
+                    <argument name="path" xsi:type="string" translate="true"></argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        <!--// xoa lable max dinh-->
+        <referenceBlock name="header" remove="true"/>
+
+        <referenceBlock name="logo" >
+            <arguments>
+                <argument name="logo_file" xsi:type="string">images/logo.webp</argument>
+                <argument name="logo_img_width" xsi:type="number">200</argument>
+                <argument name="logo_img_height" xsi:type="number">200</argument>
+            </arguments>
+        </referenceBlock>
+
+        <referenceContainer name="header.container">
+            <block class="Magento\Framework\View\Element\Template" name="custom_header" as="custom_header"
+                   template="Magento_Theme::html/customheader.phtml"  before="-"/>
+        </referenceContainer>
+
+        <!--<move element="minicart" destination="custom_header" after="logo_file" />-->
+        <!--<move element="top.search" destination="custom_header"/>-->
+
+        <referenceBlock name="advanced-search-link" remove="true">
+
+        </referenceBlock>
+    </body>
+</page>

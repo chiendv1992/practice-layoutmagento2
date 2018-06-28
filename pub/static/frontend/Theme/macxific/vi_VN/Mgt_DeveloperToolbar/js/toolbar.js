@@ -1,0 +1,1 @@
+/var/www/html/magento/vendor/mgtcommerce/module-mgtdevelopertoolbar/src/app/code/Mgt/DeveloperToolbar/view/frontend/web/js/toolbar.js
