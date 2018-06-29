@@ -143,6 +143,7 @@ return [
     'Dotdigitalgroup_Email' => 1,
     'Magento_WishlistAnalytics' => 1,
     'Magento_WishlistSampleData' => 1,
+    'Mageplaza_Core' => 1,
     'Mgt_DeveloperToolbar' => 1,
     'OpenCert_Hello' => 1,
     'Shopial_Facebook' => 1,

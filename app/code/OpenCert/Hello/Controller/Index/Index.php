@@ -8,7 +8,7 @@ class Index extends \Magento\Framework\App\Action\Action
 {
     protected $_resultPageFactory;
     protected $_registry;
- 
+
     public function __construct(Context $context, \Magento\Framework\View\Result\PageFactory $resultPageFactory, \Magento\Framework\Registry $registry)
     {
         $this->_resultPageFactory = $resultPageFactory;

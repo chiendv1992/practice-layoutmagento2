@@ -8,13 +8,15 @@
                 </arguments>
             </block>
         </referenceContainer>
-
-        <referenceBlock name="register-link" remove="true" />           <!--for Create Account Link-->
-        <referenceBlock name="authorization-link" remove="true" />      <!--for Sign In Link  -->
+        <!--delete link-->
+        <referenceBlock name="register-link" remove="true" />
+        <referenceBlock name="authorization-link" remove="true" />
         <referenceBlock name="wish-list-link" remove="true" />
+        <referenceBlock name="advanced-search-link" remove="true"/>
 
+        <!--custom link-->
         <referenceBlock name="header.links">
-            <block class="Magento\Framework\View\Element\Html\Link" name="custom-link">
+            <block class="Magento\Framework\View\Element\Html\Link" name="custom-aboutus">
                 <arguments>
                     <argument name="label" xsi:type="string" translate="true">About us</argument>
                     <argument name="path" xsi:type="string" translate="true"></argument>
@@ -26,16 +28,16 @@
                     <argument name="path" xsi:type="string" translate="true"></argument>
                 </arguments>
             </block>
-            <block class="Magento\Framework\View\Element\Html\Link" name="custom-blogw">
+            <block class="Magento\Framework\View\Element\Html\Link" name="custom-google">
                 <arguments>
-                    <argument name="label" xsi:type="string" translate="true">asaas</argument>
-                    <argument name="path" xsi:type="string" translate="true"></argument>
+                    <argument name="label" xsi:type="string" translate="true">google</argument>
+                    <argument name="path" xsi:type="string" translate="true">http://google.com</argument>
                 </arguments>
             </block>
         </referenceBlock>
-        <!--// xoa lable max dinh-->
+        <!--// xoa lable mac dinh-->
         <referenceBlock name="header" remove="true"/>
-
+        <!--custom iamage -->
         <referenceBlock name="logo" >
             <arguments>
                 <argument name="logo_file" xsi:type="string">images/logo.webp</argument>
@@ -43,17 +45,45 @@
                 <argument name="logo_img_height" xsi:type="number">200</argument>
             </arguments>
         </referenceBlock>
-
-        <referenceContainer name="header.container">
-            <block class="Magento\Framework\View\Element\Template" name="custom_header" as="custom_header"
-                   template="Magento_Theme::html/customheader.phtml"  before="-"/>
+        <!--soo dien thoai header-->
+        <referenceContainer name="header-wrapper" htmlId="contact">
+            <container name="contact" htmlTag="div" htmlId="contact">
+                <block class="OpenCert\Hello\Block\HelloWorld" name="contacts"
+                       template="contact.phtml">
+                </block>
+            </container>
         </referenceContainer>
 
-        <!--<move element="minicart" destination="custom_header" after="logo_file" />-->
-        <!--<move element="top.search" destination="custom_header"/>-->
+        <!--remove link footer-->
+        <referenceBlock name="footer_links" remove="true"/>
+        <!--chen footer block-->
+        <referenceContainer name="footer-container" htmlId="footer">
+            <container name="footer" htmlTag="div" htmlId="footers">
+                <block class="OpenCert\Hello\Block\HelloWorld" name="custom"
+                       template="footer_custom_block.phtml">
+                </block>
+            </container>
+        </referenceContainer>
 
-        <referenceBlock name="advanced-search-link" remove="true">
 
-        </referenceBlock>
+
+        <!--Chi tiet san pham-->
+        <referenceBlock name="advanced-search-link" remove="true"/>
+        <referenceBlock name="catalog.compare.sidebar" remove="true"/>
+        <referenceBlock name="wishlist_sidebar" remove="true"/>
+        <referenceContainer name="product.info.main">
+            <block class="OpenCert\Hello\Block\HelloWorld" name="detail_pr" template="Demo_Test::product_list.phtml" before="-">
+            </block>
+        </referenceContainer>
+        <move element="product.info.stock.sku" destination="div.sidebar.additional" as="sku" before="-"/>
+        <move element="product.price.final" destination="div.sidebar.additional" as="final" after="sku"/>
+        <move element="product.info.simple" destination="div.sidebar.additional" as="info_sp" after="final"/>
+        <move element="product.info" destination="div.sidebar.additional" as="info_pr" after="info_sp"/>
+        <move element="product.info.addto" destination="div.sidebar.additional" as="info_addto" after="info_pr"/>
+        <move element="product.info.social" destination="div.sidebar.additional" as="info_social" after="info_addto"/>
+
+
+
+
     </body>
 </page>

@@ -5,3 +5,4 @@ Test/tmp
 Test/.env
 Test/codeception.yml
 Test/Functional/functional/_generated
+.gitattributes
