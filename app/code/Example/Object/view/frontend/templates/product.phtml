@@ -1,0 +1,23 @@
+<?php
+
+echo "Example of using object manager directly to load a specific product from SKU";
+echo "<br><br>";
+
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+
+$productRepository = $objectManager->get('\Magento\Catalog\Model\ProductRepository');
+
+// get product by product id
+$product = $productRepository->getById(15);
+
+// get product by product sku
+$product = $productRepository->get('MT12');
+
+echo $product->getEntityId() . '<br>';
+echo $product->getName() . '<br>';
+echo $product->getSKU() . '<br>';
+echo $product->getPrice() . '<br>';
+echo $product->getSpecialPrice() . '<br>';
+echo $product->getTypeId() . '<br>';
+echo $product->getProductUrl() . '<br>';
