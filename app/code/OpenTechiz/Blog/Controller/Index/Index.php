@@ -3,9 +3,6 @@ namespace OpenTechiz\Blog\Controller\Index;
 
 class Index extends \Magento\Framework\App\Action\Action
 {
-	/**
-	 * @var \Magento\Framework\View\Result\PageFactory
-	 */
 	protected $_resultPageFactory;
 
 	function __construct(

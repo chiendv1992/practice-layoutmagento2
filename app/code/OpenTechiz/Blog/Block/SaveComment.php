@@ -16,7 +16,7 @@ class SaveComment extends \Magento\Framework\View\Element\Template
 
 	public function getFormAction()
 	{
-		return '/magento2/blog/comment/save';
+		return '/magento/blog/comment/save';
 	}
 
 	public function getPostID()
