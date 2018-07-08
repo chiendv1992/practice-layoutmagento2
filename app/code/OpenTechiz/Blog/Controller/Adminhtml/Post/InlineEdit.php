@@ -7,16 +7,16 @@ class InlineIndex extends \Magento\Backend\App\Action
 {
 
     protected $jonFactory;
-    protected $banerFactory;
+    protected $postFactory;
 
     public function __construct(
         Context $context,
         JsonFactory $jsonFactory,
-        PostFactory $banerFactory
+        PostFactory $postFactory
     ) {
         parent::__construct($context);
         $this->jsonFactory = $jsonFactory;
-        $this->banerFactory = $banerFactory;
+        $this->postFactory = $postFactory;
     }
 
     public function execute()
@@ -28,6 +28,7 @@ class InlineIndex extends \Magento\Backend\App\Action
         $messages = [];
         // Get POST data
         $postItems = $this->getRequest()->getParam('items', []);
+
         // Check request
         if (!($this->getRequest()->getParam('isAjax') && count($postItems))) {
             return $resultJson->setData([
@@ -38,7 +39,7 @@ class InlineIndex extends \Magento\Backend\App\Action
         // Save data to database
         foreach (array_keys($postItems) as $postId) {
             try {
-                $post = $this->bannerFactory->create();
+                $post = $this->postFactory->create();
                 $post->load($postId);
                 $post->setData($postItems[(string)$postId]);
                 $post->save();

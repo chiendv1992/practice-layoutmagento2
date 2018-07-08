@@ -11,7 +11,7 @@
             <button name="add">
                 <url path="*/*/new"/>
                 <class>primary</class>
-                <label translate="true">Add New Page</label>
+                <label translate="true">Add New Post</label>
             </button>
         </buttons>
         <spinner>blog_post_columns</spinner>
