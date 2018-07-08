@@ -6,23 +6,14 @@ use Magento\Ui\Component\Listing\Columns\Column;
 use Magento\Framework\UrlInterface;
 class CommentActions extends Column
 {
-    /** Url path */
+
     const BLOG_URL_PATH_EDIT_COMMENT = 'blog/comment/edit';
     const BLOG_URL_PATH_DELETE_COMMENT = 'blog/comment/delete';
-    /** @var UrlInterface */
+
     protected $urlBuilder;
-    /**
-     * @var string
-     */
+
     private $editUrl;
-    /**
-     * @param ContextInterface $context
-     * @param UiComponentFactory $uiComponentFactory
-     * @param UrlInterface $urlBuilder
-     * @param array $components
-     * @param array $data
-     * @param string $editUrl
-     */
+
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
@@ -35,12 +26,7 @@ class CommentActions extends Column
         $this->editUrl = $editUrl;
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
-    /**
-     * Prepare Data Source
-     *
-     * @param array $dataSource
-     * @return array
-     */
+
     public function prepareDataSource(array $dataSource)
     {
         if (isset($dataSource['data']['items'])) {

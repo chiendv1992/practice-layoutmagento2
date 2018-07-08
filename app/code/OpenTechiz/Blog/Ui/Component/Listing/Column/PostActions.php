@@ -11,18 +11,9 @@ class PostActions extends Column
     const BLOG_URL_PATH_DELETE = 'blog/post/delete';
     /** @var UrlInterface */
     protected $urlBuilder;
-    /**
-     * @var string
-     */
+
     private $editUrl;
-    /**
-     * @param ContextInterface $context
-     * @param UiComponentFactory $uiComponentFactory
-     * @param UrlInterface $urlBuilder
-     * @param array $components
-     * @param array $data
-     * @param string $editUrl
-     */
+
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
@@ -35,12 +26,7 @@ class PostActions extends Column
         $this->editUrl = $editUrl;
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
-    /**
-     * Prepare Data Source
-     *
-     * @param array $dataSource
-     * @return array
-     */
+    
     public function prepareDataSource(array $dataSource)
     {
         if (isset($dataSource['data']['items'])) {

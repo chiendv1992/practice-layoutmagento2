@@ -3,8 +3,7 @@ namespace OpenTechiz\Blog\Api\Data;
 
 interface CommentInterface
 {
-	
-    const COMMENT_ID                  = 'comment_id';
+	const COMMENT_ID                  = 'comment_id';
     const CONTENT                  = 'content';
     const AUTHOR                    = 'author';
     const POST_ID                  = 'post_id';

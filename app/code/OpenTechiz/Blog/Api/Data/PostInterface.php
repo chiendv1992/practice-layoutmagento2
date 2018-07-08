@@ -3,7 +3,6 @@ namespace OpenTechiz\Blog\Api\Data;
 
 interface PostInterface
 {
-	
     const POST_ID                  = 'post_id';
     const URL_KEY                  = 'url_key';
     const TITLE                    = 'title';
@@ -11,7 +10,7 @@ interface PostInterface
     const CREATION_TIME            = 'creation_time';
     const UPDATE_TIME              = 'update_time';
     const IS_ACTIVE                = 'is_active';
-    
+ 
 	function getID();
 
 	function getUrlKey();
