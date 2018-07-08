@@ -1,38 +1,57 @@
 <?php
 namespace OpenTechiz\Blog\Controller\Comment;
 use \Magento\Framework\App\Action\Action;
-use Magento\Framework\Controller\ResultFactory;
 
 class Save extends Action
 {
     /**
-     * @var \Magento\Framework\View\Result\PageFactory
+     * @var \Magento\Framework\Controller\Result\JsonFactory
      */
-    protected $_resultPageFactory;
+    protected $_resultJsonFactory;
+
+    protected $_inlineTranslation;
 
     function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \OpenTechiz\Blog\Model\Post $post
+        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
+        \Magento\Framework\Translate\Inline\StateInterface $inlineTranslation,
+        \Magento\Framework\App\Action\Context $context
     )
     {
         $this->_resultFactory = $context->getResultFactory();
-        $this->_post = $post;
+        $this->_resultJsonFactory = $resultJsonFactory;
+        $this->_inlineTranslation = $inlineTranslation;
         parent::__construct($context);
     }
 
     public function execute()
     {
-        $resultRedirect = $this->_resultFactory->create(ResultFactory::TYPE_REDIRECT);
-        $postData = (array) $this->getRequest()->getPost();
+        $error = false;
+        $message = '';
+        $postData = (array) $this->getRequest()->getPostValue();
 
-        if (!empty($postData)) {
-            // Retrieve your form data
+        if(!$postData)
+        {
+            $error = true;
+            $message = "Your submission is not valid. Please try again!";
+        }
+        $this->_inlineTranslation->suspend();
+        $postObject = new \Magento\Framework\DataObject();
+        $postObject->setData($postData);
+
+        // validate data
+        if(!\Zend_Validate::is(trim($postData['author']), 'NotEmpty'))
+        {
+            $error = true;
+            $message = "Name can not be empty!";
+        }
+
+        $jsonResultResponse = $this->_resultJsonFactory->create();
+        if(!$error)
+        {
+            // save data to database
             $author   = $postData['author'];
             $content    = $postData['content'];
             $post_id = $postData['post_id'];
-
-            $this->_post->load($post_id);
-            $urlPost = $this->_post->getUrl();
 
             $comment = $this->_objectManager->create('OpenTechiz\Blog\Model\Comment');
             $comment->setAuthor($author);
@@ -40,16 +59,17 @@ class Save extends Action
             $comment->setPostID($post_id);
 
             $comment->save();
-            // Display the succes form validation message
-            $this->messageManager->addSuccessMessage('Comment added succesfully!');
-            if($urlPost)
-            {
-                $resultRedirect->setUrl($urlPost);
-            } else $resultRedirect->setUrl('/magento/blog/');
-            return $resultRedirect;
+            $jsonResultResponse->setData([
+                'result' => 'success',
+                'message' => 'Thank you for your submission. Our Admins will review and approve shortly'
+            ]);
+        } else {
+            $jsonResultResponse->setData([
+                'result' => 'error',
+                'message' => $message
+            ]);     
         }
-        
-        $resultRedirect->setUrl('/magento/blog/');
-        return $resultRedirect;
+
+        return $jsonResultResponse;
     }
 }

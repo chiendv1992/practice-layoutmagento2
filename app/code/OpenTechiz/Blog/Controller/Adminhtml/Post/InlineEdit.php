@@ -3,86 +3,56 @@ namespace OpenTechiz\Blog\Controller\Adminhtml\Post;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\View\Result\JsonFactory;
 use OpenTechiz\Blog\Model\PostFactory;
-
-
-class InlineEdit extends \Magento\Backend\App\Action
+class InlineIndex extends \Magento\Backend\App\Action
 {
 
-    const ADMIN_RESOURCE = 'OpenTechiz_Blog::save';
-
-    protected $dataProcessor;
-
-    protected $postRepository;
-
-    protected $jsonFactory;
+    protected $jonFactory;
+    protected $banerFactory;
 
     public function __construct(
         Context $context,
-        PostRepository $postRepository,
-        JsonFactory $jsonFactory
+        JsonFactory $jsonFactory,
+        PostFactory $banerFactory
     ) {
         parent::__construct($context);
-        $this->postRepository = $postRepository;
         $this->jsonFactory = $jsonFactory;
+        $this->banerFactory = $banerFactory;
     }
 
     public function execute()
     {
 
+        // Init result Json
         $resultJson = $this->jsonFactory->create();
         $error = false;
         $messages = [];
-
+        // Get POST data
         $postItems = $this->getRequest()->getParam('items', []);
+        // Check request
         if (!($this->getRequest()->getParam('isAjax') && count($postItems))) {
             return $resultJson->setData([
                 'messages' => [__('Please correct the data sent.')],
                 'error' => true,
             ]);
         }
-
+        // Save data to database
         foreach (array_keys($postItems) as $postId) {
-            /** @var \OpenTechiz\Blog\Model\Post $post */
-            $post = $this->postRepository->getById($postId);
             try {
-                $post = $this->postFactory->create();
+                $post = $this->bannerFactory->create();
                 $post->load($postId);
                 $post->setData($postItems[(string)$postId]);
                 $post->save();
-            } catch (\Magento\Framework\Exception\LocalizedException $e) {
-                $messages[] = $this->getErrorWithPostId($post, $e->getMessage());
-                $error = true;
-            } catch (\RuntimeException $e) {
-                $messages[] = $this->getErrorWithPostId($post, $e->getMessage());
-                $error = true;
             } catch (\Exception $e) {
-                $messages[] = $this->getErrorWithPostId(
-                    $post,
-                    __('Something went wrong while saving the post.')
-                );
+                $messages[] = __('Something went wrong while saving the image.');
                 $error = true;
             }
         }
-
+        // Return result Json
         return $resultJson->setData([
             'messages' => $messages,
             'error' => $error
         ]);
     }
 
-    protected function validatePost(array $postData, \OpenTechiz\Blog\Model\Post $post, &$error, array &$messages)
-    {
-        if (!($this->dataProcessor->validate($postData) && $this->dataProcessor->validateRequireEntry($postData))) {
-            $error = true;
-            foreach ($this->messageManager->getMessages(true)->getItems() as $error) {
-                $messages[] = $this->getErrorWithPostId($post, $error->getText());
-            }
-        }
-    }
-
-    protected function getErrorWithPostId(PostInterface $post, $errorText)
-    {
-        return '[Post ID: ' . $post->getId() . '] ' . $errorText;
-    }
 
 }

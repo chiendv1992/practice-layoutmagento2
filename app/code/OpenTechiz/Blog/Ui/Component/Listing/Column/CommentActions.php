@@ -4,11 +4,11 @@ use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
 use Magento\Framework\UrlInterface;
-class PostActions extends Column
+class CommentActions extends Column
 {
     /** Url path */
-    const BLOG_URL_PATH_EDIT = 'blog/post/edit';
-    const BLOG_URL_PATH_DELETE = 'blog/post/delete';
+    const BLOG_URL_PATH_EDIT_COMMENT = 'blog/comment/edit';
+    const BLOG_URL_PATH_DELETE_COMMENT = 'blog/comment/delete';
     /** @var UrlInterface */
     protected $urlBuilder;
     /**
@@ -29,7 +29,7 @@ class PostActions extends Column
         UrlInterface $urlBuilder,
         array $components = [],
         array $data = [],
-        $editUrl = self::BLOG_URL_PATH_EDIT
+        $editUrl = self::BLOG_URL_PATH_EDIT_COMMENT
     ) {
         $this->urlBuilder = $urlBuilder;
         $this->editUrl = $editUrl;
@@ -46,17 +46,17 @@ class PostActions extends Column
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as & $item) {
                 $name = $this->getData('name');
-                if (isset($item['post_id'])) {
+                if (isset($item['comment_id'])) {
                     $item[$name]['edit'] = [
-                        'href' => $this->urlBuilder->getUrl($this->editUrl, ['post_id' => $item['post_id']]),
+                        'href' => $this->urlBuilder->getUrl($this->editUrl, ['comment_id' => $item['comment_id']]),
                         'label' => __('Edit')
                     ];
                     $item[$name]['delete'] = [
-                        'href' => $this->urlBuilder->getUrl(self::BLOG_URL_PATH_DELETE, ['post_id' => $item['post_id']]),
+                        'href' => $this->urlBuilder->getUrl(self::BLOG_URL_PATH_DELETE_COMMENT, ['comment_id' => $item['comment_id']]),
                         'label' => __('Delete'),
                         'confirm' => [
-                            'title' => __('Delete "${ $.$data.title }"'),
-                            'message' => __('Are you sure you wan\'t to delete a "${ $.$data.title }" record?')
+                            'title' => __('Delete "${ $.$data.author }\'s comment"'),
+                            'message' => __('Are you sure you wan\'t to delete a "${ $.$data.author }\'s comment')
                         ]
                     ];
                 }

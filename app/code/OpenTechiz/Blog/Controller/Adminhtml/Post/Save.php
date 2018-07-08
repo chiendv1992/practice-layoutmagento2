@@ -1,71 +1,82 @@
 <?php
-
 namespace OpenTechiz\Blog\Controller\Adminhtml\Post;
 
 use Magento\Backend\App\Action;
 use OpenTechiz\Blog\Model\Post;
 use Magento\Framework\App\Request\DataPersistorInterface;
+use Magento\Framework\Exception\LocalizedException;
 
 class Save extends \Magento\Backend\App\Action
 {
-
-    const ADMIN_RESOURCE = 'OpenTechiz_Blog::save';
-
-    protected $dataProcessor;
-
+    
+    const ADMIN_RESOURCE = 'OpenTechiz_Blog::post';    
+    protected $dataProcessor;    
     protected $dataPersistor;
+    protected $model;
 
     public function __construct(
         Action\Context $context,
         PostDataProcessor $dataProcessor,
+        Post $model,
         DataPersistorInterface $dataPersistor
     ) {
         $this->dataProcessor = $dataProcessor;
         $this->dataPersistor = $dataPersistor;
+        $this->model = $model;
         parent::__construct($context);
     }
 
     public function execute()
     {
-        $resultRedirect = $this->resultRedirectFactory->create();
+        
         $data = $this->getRequest()->getPostValue();
+        $resultRedirect = $this->resultRedirectFactory->create();
         if ($data) {
-            // Optimize data
-            if (isset($data['is_active']) && $data['is_active'] === 'true') {
-                $data['is_active'] = Post::STATUS_ENABLED;
+
+            $data = $this->dataProcessor->filter($data);
+            
+
+            $id = $this->getRequest()->getParam('post_id');
+            if ($id) {
+                $this->model->load($id);
             }
-            if (empty($data['post_id'])) {
-                $data['post_id'] = null;
+           
+
+            $this->model->setTitle($data['title']);
+            $this->model->setContent($data['content']);
+            $this->model->setUrlKey($data['url_key']);
+            $this->model->setIsActive($data['is_active']);
+
+            $this->_eventManager->dispatch(
+                'blog_post_prepare_save',
+                ['post' => $this->model, 'request' => $this->getRequest()]
+            );
+
+            if (!$this->dataProcessor->validate($data)) {
+                return $resultRedirect->setPath('*/*/edit', ['id' => $this->model->getId(), '_current' => true]);
             }
-            // Init model and load by post_id if exists
-            $model = $this->_objectManager->create('OpenTechiz\Blog\Model\Post');
-            $post_id = $this->getRequest()->getParam('post_id');
-            if ($post_id) {
-                $model->load($post_id);
-            }
-            // Validate data
-            if (!$this->dataProcessor->validateRequireEntry($data)) {
-                // Redirect to Edit Post if has error
-                return $resultRedirect->setPath('*/*/edit', ['post_id' => $model->getpost_id(), '_current' => true]);
-            }
-            // Update model
-            $model->setData($data);
-            // Save data to database
+
             try {
-                $model->save();
-                $this->messageManager->addSuccess(__('You saved the post.'));
-                $this->dataPersistor->clear('blog_post');
+                $this->model->save();
+                $this->messageManager->addSuccess(__('You saved the Post.'));
+                $this->dataPersistor->clear('post');
                 if ($this->getRequest()->getParam('back')) {
-                    return $resultRedirect->setPath('*/*/edit', ['post_id' => $model->getpost_id(), '_current' => true]);
+                    return $resultRedirect->setPath(
+                        '*/*/edit',
+                        ['id' => $this->model->getId(),
+                         '_current' => true]
+                    );
                 }
                 return $resultRedirect->setPath('*/*/');
+            } catch (LocalizedException $e) {
+                $this->messageManager->addError($e->getMessage());
             } catch (\Exception $e) {
-                $this->messageManager->addException($e, __('Something went wrong while saving the image.'));
+                $this->messageManager->addException($e, __('Something went wrong while saving the Post.'));
             }
-            $this->dataPersistor->set('blog_post', $data);
-            return $resultRedirect->setPath('*/*/edit', ['post_id' => $this->getRequest()->getParam('post_id')]);
+
+            $this->dataPersistor->set('post', $data);
+            return $resultRedirect->setPath('*/*/edit', ['id' => $this->getRequest()->getParam('id')]);
         }
-        // Redirect to List Post
         return $resultRedirect->setPath('*/*/');
     }
 }

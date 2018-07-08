@@ -1,13 +1,16 @@
 <?php
-
 namespace OpenTechiz\Blog\Block\Adminhtml\Post\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
-
+/**
+ * Class BackButton
+ */
 class BackButton extends GenericButton implements ButtonProviderInterface
 {
-
+    /**
+     * @return array
+     */
     public function getButtonData()
     {
         return [
@@ -18,7 +21,11 @@ class BackButton extends GenericButton implements ButtonProviderInterface
         ];
     }
 
-
+    /**
+     * Get URL for back (reset) button
+     *
+     * @return string
+     */
     public function getBackUrl()
     {
         return $this->getUrl('*/*/');

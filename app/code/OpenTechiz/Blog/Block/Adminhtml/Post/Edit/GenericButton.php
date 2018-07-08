@@ -1,39 +1,61 @@
 <?php
 namespace OpenTechiz\Blog\Block\Adminhtml\Post\Edit;
 
-use Magento\Backend\Block\Widget\Context;
-use Magento\Cms\Api\PageRepositoryInterface;
-use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Search\Controller\RegistryConstants;
 
+/**
+ * Class GenericButton
+ */
 class GenericButton
 {
+    /**
+     * Url Builder
+     *
+     * @var \Magento\Framework\UrlInterface
+     */
+    protected $urlBuilder;
 
-    protected $context;
+    /**
+     * Registry
+     *
+     * @var \Magento\Framework\Registry
+     */
+    protected $registry;
 
-    protected $pageRepository;
-
+    /**
+     * Constructor
+     *
+     * @param \Magento\Backend\Block\Widget\Context $context
+     * @param \Magento\Framework\Registry $registry
+     */
     public function __construct(
-        Context $context,
-        PageRepositoryInterface $pageRepository
+        \Magento\Backend\Block\Widget\Context $context,
+        \Magento\Framework\Registry $registry
     ) {
-        $this->context = $context;
-        $this->pageRepository = $pageRepository;
+        $this->urlBuilder = $context->getUrlBuilder();
+        $this->registry = $registry;
     }
 
-    public function getPageId()
+    /**
+     * Return the synonyms group Id.
+     *
+     * @return int|null
+     */
+    public function getId()
     {
-        try {
-            return $this->pageRepository->getById(
-                $this->context->getRequest()->getParam('post_id')
-            )->getId();
-        } catch (NoSuchEntityException $e) {
-        }
-        return null;
+        $post = $this->registry->registry('post');
+        return $post ? $post->getId() : null;
     }
 
-
+    /**
+     * Generate url by route and parameters
+     *
+     * @param   string $route
+     * @param   array $params
+     * @return  string
+     */
     public function getUrl($route = '', $params = [])
     {
-        return $this->context->getUrlBuilder()->getUrl($route, $params);
+        return $this->urlBuilder->getUrl($route, $params);
     }
 }
