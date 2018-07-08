@@ -5,24 +5,24 @@ use Magento\Framework\View\Result\PageFactory;
 class Index extends \Magento\Backend\App\Action
 {
 
-    protected $resultPageFactory;
+    protected $resultPostFactory;
     public function __construct(
         Context $context,
-        PageFactory $resultPageFactory
+        PageFactory $resultPostFactory
     ) {
         parent::__construct($context);
-        $this->resultPageFactory = $resultPageFactory;
+        $this->resultPostFactory = $resultPostFactory;
     }
 
     public function execute()
     {
 
-        $resultPage = $this->resultPageFactory->create();
-        $resultPage->setActiveMenu('OpenTechiz_Blog::post');
-        $resultPage->addBreadcrumb(__('Blog Posts'), __('Blog Posts'));
-        $resultPage->addBreadcrumb(__('Manage Blog Posts'), __('Manage Blog Posts'));
-        $resultPage->getConfig()->getTitle()->prepend(__('Blog Posts'));
-        return $resultPage;
+        $resultPost = $this->resultPostFactory->create();
+        $resultPost->setActiveMenu('OpenTechiz_Blog::post');
+        $resultPost->addBreadcrumb(__('Blog Posts'), __('Blog Posts'));
+        $resultPost->addBreadcrumb(__('Manage Blog Posts'), __('Manage Blog Posts'));
+        $resultPost->getConfig()->getTitle()->prepend(__('Blog Posts'));
+        return $resultPost;
     }
 
     protected function _isAllowed()

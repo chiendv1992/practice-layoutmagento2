@@ -1,18 +1,14 @@
 <?php
-
 namespace OpenTechiz\Blog\Controller\Adminhtml\Post;
-
 use Magento\Backend\App\Action;
-
 class Edit extends \Magento\Backend\App\Action
 {
-
+    /**
+     * Authorization level of a basic admin session
+     */
     const ADMIN_RESOURCE = 'OpenTechiz_Blog::save';
-
     protected $_coreRegistry;
-
     protected $resultPageFactory;
-
     public function __construct(
         Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
@@ -22,43 +18,36 @@ class Edit extends \Magento\Backend\App\Action
         $this->_coreRegistry = $registry;
         parent::__construct($context);
     }
-
-
+    /**
+     * Load layout and set active menu
+     */
     protected function _initAction()
     {
-
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->setActiveMenu('OpenTechiz_Blog::blog_post');
+        $resultPage->setActiveMenu('OpenTechiz_Blog::post');
         return $resultPage;
     }
-
     public function execute()
     {
-
-        // 1. Get ID and create model
-        $id = $this->getRequest()->getParam('post_id');
-
+        // Get ID and create model
+        $post_id = $this->getRequest()->getParam('post_id');
         $model = $this->_objectManager->create('OpenTechiz\Blog\Model\Post');
-
-        // 2. Initial checking
-        if ($id) {
-            $model->load($id);
+        // Initial checking
+        if ($post_id) {
+            $model->load($post_id);
+            // If cannot get ID of model, display error message and redirect to List page
             if (!$model->getId()) {
-                $this->messageManager->addError(__('This Post no longer exists.'));
-                //chuyen huong nguoi dung bang cach tai lai trang moi
+                $this->messageManager->addError(__('This image no longer exists.'));
                 $resultRedirect = $this->resultRedirectFactory->create();
                 return $resultRedirect->setPath('*/*/');
             }
         }
-
+        // Registry post
         $this->_coreRegistry->register('post', $model);
-
-        // 5. Build edit form
+        // Build form
         $resultPage = $this->_initAction();
-
         $resultPage->getConfig()->getTitle()
-            ->prepend($model->getId() ? $model->getTitle() : __('New Post'));
-
+            ->prepend($model->getId() ? $model->getTitle() : __('Create Post'));
         return $resultPage;
     }
 }

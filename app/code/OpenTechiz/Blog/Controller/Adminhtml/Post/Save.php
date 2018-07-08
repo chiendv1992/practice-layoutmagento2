@@ -45,7 +45,7 @@ class Save extends \Magento\Backend\App\Action
             }
             // Validate data
             if (!$this->dataProcessor->validateRequireEntry($data)) {
-                // Redirect to Edit page if has error
+                // Redirect to Edit Post if has error
                 return $resultRedirect->setPath('*/*/edit', ['post_id' => $model->getpost_id(), '_current' => true]);
             }
             // Update model
@@ -65,7 +65,7 @@ class Save extends \Magento\Backend\App\Action
             $this->dataPersistor->set('blog_post', $data);
             return $resultRedirect->setPath('*/*/edit', ['post_id' => $this->getRequest()->getParam('post_id')]);
         }
-        // Redirect to List page
+        // Redirect to List Post
         return $resultRedirect->setPath('*/*/');
     }
 }
