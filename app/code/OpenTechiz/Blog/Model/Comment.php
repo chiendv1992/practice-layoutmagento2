@@ -40,6 +40,9 @@ class Comment extends \Magento\Framework\Model\AbstractModel implements CommentI
     function getAuthor(){
         return $this->getData(self::AUTHOR);
     }
+    function getEmail(){
+        return $this->getData(self::EMAIL);
+    }
    
     function getCreationTime(){
         return $this->getData(self::CREATION_TIME);
@@ -57,6 +60,11 @@ class Comment extends \Magento\Framework\Model\AbstractModel implements CommentI
     
     function setAuthor($author){
         $this->setData(self::AUTHOR,$author);
+        return $this;
+    }
+
+    function setEmail($email){
+        $this->setData(self::EMAIL,$email);
         return $this;
     }
     

@@ -31,12 +31,7 @@ class Edit extends \Magento\Backend\App\Action
             ->addBreadcrumb(__('Manage Blog Comments'), __('Manage Blog Comments'));
         return $resultPage;
     }
-    /**
-     * Edit Blog post
-     *
-     * @return \Magento\Backend\Model\View\Result\Page|\Magento\Backend\Model\View\Result\Redirect
-     * @SuppressWarnings(PHPMD.NPathComplexity)
-     */
+ 
     public function execute()
     {
         $id = $this->getRequest()->getParam('comment_id');

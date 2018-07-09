@@ -4,9 +4,7 @@ use \Magento\Framework\App\Action\Action;
 
 class Save extends Action
 {
-    /**
-     * @var \Magento\Framework\Controller\Result\JsonFactory
-     */
+
     protected $_resultJsonFactory;
 
     protected $_inlineTranslation;

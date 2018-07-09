@@ -13,32 +13,13 @@ use Magento\Framework\App\Request\DataPersistorInterface;
  */
 class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 {
-    /**
-     * @var \Magento\Cms\Model\ResourceModel\Block\Collection
-     */
+ 
     protected $collection;
 
-    /**
-     * @var DataPersistorInterface
-     */
     protected $dataPersistor;
 
-    /**
-     * @var array
-     */
     protected $loadedData;
 
-    /**
-     * Constructor
-     *
-     * @param string $name
-     * @param string $primaryFieldName
-     * @param string $requestFieldName
-     * @param CollectionFactory $blockCollectionFactory
-     * @param DataPersistorInterface $dataPersistor
-     * @param array $meta
-     * @param array $data
-     */
     public function __construct(
         $name,
         $primaryFieldName,
@@ -53,11 +34,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
     }
 
-    /**
-     * Get data
-     *
-     * @return array
-     */
+    
     public function getData()
     {
         if (isset($this->loadedData)) {
