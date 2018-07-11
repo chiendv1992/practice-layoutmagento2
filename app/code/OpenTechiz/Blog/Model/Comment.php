@@ -5,9 +5,10 @@ use Magento\Framework\DataObject\IdentityInterface;
 
 class Comment extends \Magento\Framework\Model\AbstractModel implements CommentInterface,IdentityInterface
 {
+
+    const STATUS_PENDING = 0;
     const STATUS_ENABLED = 1;
     const STATUS_DISABLED =2;
-    const STATUS_PENDING = 0;
 	const CACHE_TAG='opentechiz_blog_comment';
 
 	function _construct()
@@ -67,7 +68,7 @@ class Comment extends \Magento\Framework\Model\AbstractModel implements CommentI
         $this->setData(self::EMAIL,$email);
         return $this;
     }
-    
+
     function setContent($content){
         $this->setData(self::CONTENT,$content);
         return $this;

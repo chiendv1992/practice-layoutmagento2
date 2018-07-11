@@ -340,13 +340,17 @@
                 </item>
             </argument>
         </column>
-        <column name="creation_time" class="Magento\Ui\Component\Listing\Columns\Date">
+        <column name="email">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">dateRange</item>
-                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/date</item>
-                    <item name="dataType" xsi:type="string">date</item>
-                    <item name="label" xsi:type="string" translate="true">Created</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="editor" xsi:type="array">
+                        <item name="editorType" xsi:type="string">text</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                    <item name="label" xsi:type="string" translate="true">Email</item>
                 </item>
             </argument>
         </column>

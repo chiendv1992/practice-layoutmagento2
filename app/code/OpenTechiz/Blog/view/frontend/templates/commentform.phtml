@@ -2,13 +2,11 @@
     {
         "*": {
             "OpenTechiz_Blog/js/commentajax": {
-                "AjaxCommentPostUrl": "<?php echo $block->getFormAction() ?>",
-                "AjaxCommentLoadUrl": "<?php echo $block->getAjaxUrl() ?>",
-                "AjaxPostId": "<?php echo $block->getPostID(); ?>"
+                "AjaxUrl": "<?php echo $block->getFormAction() ?>"
             }
         }
     }
-</script> 
+</script>
 <form class="form" method="post" id="comment-form">
     <fieldset class="fieldset">
         <legend class="legend"><span><?php /* @escapeNotVerified */ echo __('Add new comment') ?></span></legend><br>
@@ -25,21 +23,32 @@
             </div>
         </div>
         <div class="field required">
+            <label for="email" class="label">
+                <span><?php /* @escapeNotVerified */ echo __('Email') ?></span>
+            </label>
+
+            <div class="control">
+                <input type="text" id="email"
+                       name="email"
+                       class="input-text" width="50%">
+            </div>
+        </div>
+        <div class="field required">
             <label for="content" class="label">
                 <span><?php /* @escapeNotVerified */ echo __('Content') ?></span>
             </label>
 
             <div class="control">
                 <textarea id="content"
-                       name="content"
-                       class="input-text"></textarea>
+                          name="content"
+                          class="input-text"></textarea>
             </div>
         </div>
     </fieldset>
     <input type="hidden" name="post_id" value="<?php echo $block->getPostID() ?>"/>
     <div class="actions-toolbar">
         <div class="primary">
-            <button type="submit" class="action submit primary" title="<?php /* @escapeNotVerified */ echo __('Submit') ?>">
+            <button type="submit" id="submit" title="<?php /* @escapeNotVerified */ echo __('Submit') ?>">
                 <span><?php /* @escapeNotVerified */ echo __('Submit') ?></span>
             </button>
         </div>
