@@ -41,6 +41,15 @@ class PostView extends \Magento\Framework\View\Element\Template implements
 
     public function getIdentities()
     {
-        return [\OpenTechiz\Blog\Model\Post::CACHE_TAG . '_' . $this->getPost()->getId()];
+        $identities = $this->getPost()->getIdentities();
+        $comments = $this->_commentCollectionFactory
+            ->create()
+            ->addFieldToFilter('comment_id', $this->getID())
+            ->addFieldToFilter('is_active', '1');
+        foreach ($comments as $comment) {
+            $identities = array_merge($identities,
+                [\OpenTechiz\Blog\Model\Comment::CACHE_COMMENT_POST_TAG."_".$comment->getID()]);
+        }
+        return ($identities);
     }
 }

@@ -4,6 +4,7 @@ use OpenTechiz\Blog\Api\Data\CommentInterface;
 use OpenTechiz\Blog\Model\ResourceModel\Comment\Collection as CommentCollection;
 
 class CommentList extends \Magento\Framework\View\Element\Template
+                  implements  \Magento\Framework\DataObject\IdentityInterface
 {
 	protected $_commentCollectionFactory;
 
@@ -45,5 +46,17 @@ class CommentList extends \Magento\Framework\View\Element\Template
 		}
 		return $this->getData("cmt");
 	}
+
+    public function getIdentities()
+    {
+        $identities = [];
+        foreach ($this->getComments() as $comment)
+        {
+            $identities = array_merge($identities,
+                [\OpenTechiz\Blog\Model\Comment::CACHE_COMMENT_POST_TAG."_".$comment->getID()]);
+        }
+        $identities[] = \OpenTechiz\Blog\Model\Post::CACHE_TAG.'_'.$this->getPostID();
+        return $identities;
+    }
 
 }

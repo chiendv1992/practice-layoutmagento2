@@ -9,9 +9,9 @@
             </block>
         </referenceContainer>
         <!--delete link-->
-        <referenceBlock name="register-link" remove="true" />
-        <referenceBlock name="authorization-link" remove="true" />
-        <referenceBlock name="wish-list-link" remove="true" />
+        <!--<referenceBlock name="register-link" remove="true" />-->
+        <!--<referenceBlock name="authorization-link" remove="true" />-->
+        <!--<referenceBlock name="wish-list-link" remove="true" />-->
         <referenceBlock name="advanced-search-link" remove="true"/>
 
         <!--custom link-->
@@ -25,7 +25,7 @@
             <block class="Magento\Framework\View\Element\Html\Link" name="custom-blog">
                 <arguments>
                     <argument name="label" xsi:type="string" translate="true">Blog</argument>
-                    <argument name="path" xsi:type="string" translate="true"></argument>
+                    <argument name="path" xsi:type="string" translate="true">blog</argument>
                 </arguments>
             </block>
             <block class="Magento\Framework\View\Element\Html\Link" name="custom-google">
@@ -45,6 +45,15 @@
                 <argument name="logo_img_height" xsi:type="number">200</argument>
             </arguments>
         </referenceBlock>
+
+
+        <referenceContainer name="header-wrapper" htmlId="contact">
+            <block class="OpenTechiz\Blog\Block\SaveComment" name="detail_pr"
+                   template="OpenTechiz_Blog::notification.phtml" after="top.search">
+            </block>
+        </referenceContainer>
+
+
         <!--soo dien thoai header-->
         <referenceContainer name="header-wrapper" htmlId="contact">
             <container name="contact" htmlTag="div" htmlId="contact">
@@ -81,6 +90,9 @@
         <move element="product.info" destination="div.sidebar.additional" as="info_pr" after="info_sp"/>
         <move element="product.info.addto" destination="div.sidebar.additional" as="info_addto" after="info_pr"/>
         <move element="product.info.social" destination="div.sidebar.additional" as="info_social" after="info_addto"/>
+
+
+
 
 
 
