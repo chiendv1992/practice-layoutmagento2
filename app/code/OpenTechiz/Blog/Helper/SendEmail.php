@@ -1,12 +1,13 @@
-<?php
+<?php 
 namespace OpenTechiz\Blog\Helper;
 use Magento\Framework\App\Action\Action;
 class SendEmail extends \Magento\Framework\App\Helper\AbstractHelper
 {
-
+    
     protected $_transportBuilder;
-    protected $_scopeConfig;
 
+    protected $_scopeConfig;
+    
     public function __construct(
         \Magento\Framework\Mail\Template\TransportBuilder $transportBuilder,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
@@ -17,13 +18,14 @@ class SendEmail extends \Magento\Framework\App\Helper\AbstractHelper
         $this->_scopeConfig = $scopeConfig;
         parent::__construct($context);
     }
-
+    
     public function approvalEmail($email, $name)
     {
-        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE; 
         $postObject = new \Magento\Framework\DataObject();
         $data['name'] = $name;
         $postObject->setData($data);
+
         $senderEmail = $this->_scopeConfig->getValue('trans_email/ident_general/email', $storeScope);
         $senderName = $this->_scopeConfig->getValue('trans_email/ident_general/name', $storeScope);
         $sender = [
@@ -31,6 +33,7 @@ class SendEmail extends \Magento\Framework\App\Helper\AbstractHelper
             'email' => $senderEmail
         ];
 
+        
         $transport = $this->_transportBuilder
             ->setTemplateIdentifier($this->_scopeConfig->getValue('blog/general/template', $storeScope))
             ->setTemplateOptions(
@@ -45,20 +48,24 @@ class SendEmail extends \Magento\Framework\App\Helper\AbstractHelper
             ->getTransport()
             ->sendMessage();
     }
+
     public function reminderEmail($commentCount, $email, $name)
-    {
+    {   
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+
         $senderEmail = $this->_scopeConfig->getValue('trans_email/ident_general/email', $storeScope);
         $senderName = $this->_scopeConfig->getValue('trans_email/ident_general/name', $storeScope);
         $sender = [
             'name' => $senderName,
             'email' => $senderEmail
         ];
+
         $postObject = new \Magento\Framework\DataObject();
         $data['name'] = $name;
         $data['comment_count'] = $commentCount;
         $data['subject'] = "ADMIN: $commentCount comment(s) waiting for approval";
         $postObject->setData($data);
+
         $transport = $this->_transportBuilder
             ->setTemplateIdentifier($this->_scopeConfig->getValue('blog/reminder/template', $storeScope))
             ->setTemplateOptions(

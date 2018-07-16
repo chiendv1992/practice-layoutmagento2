@@ -1,5 +1,6 @@
 <?php
 namespace OpenTechiz\Blog\Block\Adminhtml\Post;
+
 class Edit extends \Magento\Backend\Block\Widget\Form\Container
 {
     /**
@@ -8,6 +9,7 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
      * @var \Magento\Framework\Registry
      */
     protected $_coreRegistry = null;
+
     /**
      * @param \Magento\Backend\Block\Widget\Context $context
      * @param \Magento\Framework\Registry $registry
@@ -21,6 +23,7 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
         $this->_coreRegistry = $registry;
         parent::__construct($context, $data);
     }
+
     /**
      * Initialize blog post edit block
      *
@@ -31,7 +34,9 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
         $this->_objectId = 'post_id';
         $this->_blockGroup = 'OpenTechiz_Blog';
         $this->_controller = 'adminhtml_post';
+
         parent::_construct();
+
         if ($this->_isAllowedAction('OpenTechiz_Blog::save')) {
             $this->buttonList->update('save', 'label', __('Save Blog Post'));
             $this->buttonList->add(
@@ -50,12 +55,14 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
         } else {
             $this->buttonList->remove('save');
         }
+
         if ($this->_isAllowedAction('OpenTechiz_Blog::post_delete')) {
             $this->buttonList->update('delete', 'label', __('Delete Post'));
         } else {
             $this->buttonList->remove('delete');
         }
     }
+
     /**
      * Retrieve text for header element depending on loaded post
      *
@@ -69,6 +76,7 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
             return __('New Post');
         }
     }
+
     /**
      * Check permission for passed action
      *
@@ -79,6 +87,7 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
     {
         return $this->_authorization->isAllowed($resourceId);
     }
+
     /**
      * Getter of url for "Save and Continue" button
      * tab_id will be replaced by desired by JS later

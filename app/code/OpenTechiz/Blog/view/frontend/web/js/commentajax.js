@@ -8,7 +8,7 @@ define([
     function main(config, element) {
         var $element = $(element);
         var AjaxCommentPostUrl = config.AjaxCommentPostUrl;
-        var dataForm = $('#comment_ajax'); 
+        var dataForm = $('#comment_ajax');
         loadcomment.loadAjax(config);
         dataForm.mage('validation', {});
 
@@ -21,7 +21,7 @@ define([
                     showLoader: true,
                     url: AjaxCommentPostUrl,
                     data: param,
-                    type: 'POST' 
+                    type: 'POST'
                 }).done(function(data){
                     console.log(data);
                     if(data.result== 'success'){

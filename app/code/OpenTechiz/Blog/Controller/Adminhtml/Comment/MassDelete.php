@@ -1,33 +1,31 @@
 <?php
 namespace OpenTechiz\Blog\Controller\Adminhtml\Comment;
+use Magento\Framework\Controller\ResultFactory;
 use Magento\Backend\App\Action\Context;
 use Magento\Ui\Component\MassAction\Filter;
 use OpenTechiz\Blog\Model\ResourceModel\Comment\CollectionFactory;
-use Magento\Framework\Controller\ResultFactory;
-
-class MassDelete  extends \Magento\Backend\App\Action
+class MassDelete extends \Magento\Backend\App\Action
 {
-   
     protected $filter;
-    
     protected $collectionFactory;
-   
     public function __construct(Context $context, Filter $filter, CollectionFactory $collectionFactory)
     {
         $this->filter = $filter;
         $this->collectionFactory = $collectionFactory;
         parent::__construct($context);
     }
-    
     public function execute()
     {
+        // Get selected collection
         $collection = $this->filter->getCollection($this->collectionFactory->create());
         $collectionSize = $collection->getSize();
-        foreach ($collection as $item) {
-            $item->delete();
+        // Delete collection
+        foreach ($collection as $banner) {
+            $banner->delete();
         }
+        // Display success message
         $this->messageManager->addSuccess(__('A total of %1 record(s) have been deleted.', $collectionSize));
-       
+        // Redirect to List page
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
         return $resultRedirect->setPath('*/*/');
     }

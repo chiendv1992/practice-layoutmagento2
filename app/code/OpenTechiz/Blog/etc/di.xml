@@ -38,14 +38,14 @@
     </virtualType>
     <virtualType name="OpenTechiz\Blog\Model\ResourceModel\Comment\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
         <arguments>
-            <argument name="mainTable" xsi:type="string">opentechiz_blog_comment</argument>
+            <argument name="mainTable" xsi:type="string">opentechiz_post_comment</argument>
             <argument name="resourceModel" xsi:type="string">OpenTechiz\Blog\Model\ResourceModel\Comment</argument>
         </arguments>
     </virtualType>
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
-                <item name="blog_comment_listing_data_source" xsi:type="string">OpenTechiz\Blog\Model\ResourceModel\Comment\Grid\Collection</item>
+                <item name="comment_listing_data_source" xsi:type="string">OpenTechiz\Blog\Model\ResourceModel\Comment\Grid\Collection</item>
             </argument>
         </arguments>
     </type>

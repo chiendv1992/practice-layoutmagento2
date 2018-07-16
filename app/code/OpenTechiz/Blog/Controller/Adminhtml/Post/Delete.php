@@ -1,19 +1,29 @@
 <?php
 namespace OpenTechiz\Blog\Controller\Adminhtml\Post;
+
 use Magento\Backend\App\Action;
 use Magento\TestFramework\ErrorLog\Logger;
+
 class Delete extends \Magento\Backend\App\Action
 {
 
+    /**
+     * {@inheritdoc}
+     */
     protected function _isAllowed()
     {
         return $this->_authorization->isAllowed('OpenTechiz_Blog::delete');
     }
 
+    /**
+     * Delete action
+     *
+     * @return \Magento\Framework\Controller\ResultInterface
+     */
     public function execute()
     {
         $id = $this->getRequest()->getParam('post_id');
-
+        /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         if ($id) {
             try {

@@ -1,10 +1,24 @@
 <?php
 namespace OpenTechiz\Blog\Controller\Adminhtml\Comment;
+
 class NewAction extends \Magento\Backend\App\Action
 {
-    
+    /**
+     * Authorization level of a basic admin session
+     *
+     * @see _isAllowed()
+     */
+//    const ADMIN_RESOURCE = 'OpenTechiz_Blog::save';
+
+    /**
+     * @var \Magento\Backend\Model\View\Result\Forward
+     */
     protected $resultForwardFactory;
- 
+
+    /**
+     * @param \Magento\Backend\App\Action\Context $context
+     * @param \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory
+     */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory
@@ -12,12 +26,12 @@ class NewAction extends \Magento\Backend\App\Action
         $this->resultForwardFactory = $resultForwardFactory;
         parent::__construct($context);
     }
-    
-    protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed('OpenTechiz_Blog::save_comment');
-    }
-    
+
+    /**
+     * Forward to edit
+     *
+     * @return \Magento\Backend\Model\View\Result\Forward
+     */
     public function execute()
     {
         /** @var \Magento\Backend\Model\View\Result\Forward $resultForward */

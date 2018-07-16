@@ -15,7 +15,7 @@ class AbstractMassStatus extends \Magento\Backend\App\Action
     protected $model = 'Magento\Framework\Model\AbstractModel';
 
     protected $status = true;
-   
+ 
     public function execute()
     {
         $selected = $this->getRequest()->getParam('selected');
@@ -35,14 +35,16 @@ class AbstractMassStatus extends \Magento\Backend\App\Action
         } catch (\Exception $e) {
             $this->messageManager->addError($e->getMessage());
         }
-       
+
+        /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
         return $resultRedirect->setPath(static::REDIRECT_URL);
     }
 
+  
     protected function setStatusAll()
     {
-       
+        /** @var AbstractCollection $collection */
         $collection = $this->_objectManager->get($this->collection);
         $this->setStatus($collection);
     }
@@ -55,7 +57,6 @@ class AbstractMassStatus extends \Magento\Backend\App\Action
         $this->setStatus($collection);
     }
 
-   
     protected function selectedSetStatus(array $selected)
     {
         /** @var AbstractCollection $collection */

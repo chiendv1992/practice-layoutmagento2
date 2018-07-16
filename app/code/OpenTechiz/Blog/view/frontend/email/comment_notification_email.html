@@ -1,20 +1,16 @@
-<!--@subject {{trans "Your comment is pending approval"}} @-->
+<!--@subject {{trans	"Your comment is waiting for approval"}} @-->
 <!--@vars {
-"var name":"User name"
+"var data":"User Name"
 } @-->
-
 {{template config_path="design/email/header_template"}}
 <table>
     <tr>
-        <td class="email-intro">
-            <p class="greeting">{{trans "Hello %user_name," user_name=$name}}</p>
-        </td>
+        <td><p class="greeting">{{trans	"Hello %user_name," user_name=$data}}</p></td>
     </tr>
-    <tr>
+    <tr class="email-information">
         <td>
             {{trans "We have received your comment and should approve it to appear soon!"}}
         </td>
     </tr>
 </table>
-
 {{template config_path="design/email/footer_template"}}

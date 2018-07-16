@@ -1,49 +1,76 @@
-<?php 
+<?php
 namespace OpenTechiz\Blog\Api\Data;
+
 
 interface PostInterface
 {
-    const POST_ID                  = 'post_id';
-    const URL_KEY                  = 'url_key';
-    const TITLE                    = 'title';
-    const CONTENT                  = 'content';
-    const CREATION_TIME            = 'creation_time';
-    const UPDATE_TIME              = 'update_time';
-    const IS_ACTIVE                = 'is_active';
- 
-	function getID();
+    /**
+     * Constants for keys of data array. Identical to the name of the getter in snake case
+     */
+    const POST_ID       = 'post_id';
+    const URL_KEY       = 'url_key';
+    const TITLE         = 'title';
+    const CONTENT       = 'content';
+    const CREATION_TIME = 'creation_time';
+    const UPDATE_TIME   = 'update_time';
+    const IS_ACTIVE     = 'is_active';
 
-	function getUrlKey();
+    /**
+     * Get ID
+     *
+     * @return int|null
+     */
+    public function getId();
 
-	function getTitle();
+    /**
+     * Get URL Key
+     *
+     * @return string
+     */
+    public function getUrlKey();
 
-	function getContent();
+    /**
+     * Get title
+     *
+     * @return string|null
+     */
+    public function getTitle();
 
-	function getUserID();
+    /**
+     * Get content
+     *
+     * @return string|null
+     */
+    public function getContent();
 
-	function getPhoto();
+    public function getCreationTime();
 
-	function getCreationTime();
 
-	function getUpdateTime();
+    public function getUpdateTime();
 
-	function isActive();
 
-	function setID($id);
+    public function isActive();
 
-	function setUrlKey($urlKey);
 
-	function setTitle($title);
+    public function setId($id);
 
-	function setContent($content);
 
-	function setUserID($userId);
+    public function setUrlKey($url_key);
 
-	function setPhoto($photoUrl);
 
-	function setCreationTime($creatTime);
+    public function getUrl();
 
-	function setUpdateTime($updateTime);
 
-	function setIsActive($isactive);
+    public function setTitle($title);
+
+    public function setContent($content);
+
+
+    public function setCreationTime($creationTime);
+
+
+    public function setUpdateTime($updateTime);
+
+
+    public function setIsActive($isActive);
 }
