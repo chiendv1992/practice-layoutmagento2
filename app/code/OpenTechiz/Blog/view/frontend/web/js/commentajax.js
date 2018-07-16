@@ -1,47 +1,44 @@
 define([
     "jquery",
-    "jquery/ui"
-], function($){
+    "jquery/ui",
+    "loadcomment"
+], function($, ui, loadcomment) {
     "use strict";
 
     function main(config, element) {
         var $element = $(element);
-        var AjaxUrl = config.AjaxUrl;
-
-        var dataForm = $('#comment-form');
+        var AjaxCommentPostUrl = config.AjaxCommentPostUrl;
+        var dataForm = $('#comment_ajax'); 
+        loadcomment.loadAjax(config);
         dataForm.mage('validation', {});
 
-        $(document).on('click','#submit',function() {
-
-            if (dataForm.valid()){
+        $(document).on('click', '.submit',function(){
+            if(dataForm.valid()){
                 event.preventDefault();
                 var param = dataForm.serialize();
                 //alert(param);
                 $.ajax({
                     showLoader: true,
-                    url: AjaxUrl,
+                    url: AjaxCommentPostUrl,
                     data: param,
-                    type: "POST"
-                }).done(function (data) {
+                    type: 'POST' 
+                }).done(function(data){
                     console.log(data);
-                    if(data.result == "success")
-                    {
+                    if(data.result== 'success'){
+                        document.getElementById('comment_ajax').reset();
                         $('.note').html(data.message);
                         $('.note').css('color', 'green');
-                        document.getElementById("comment-form").reset();
-                        return true;
+                        loadcomment.loadComments(config,data.comment,data.time);
                     }
-                    else
-                    {
+                    else {
                         $('.note').html(data.message);
-                        +   $('.note').css('color', 'red');
-                        return true;
+                        $('.note').css('color', 'red');
+                        return false;
                     }
+                    return false;
                 });
             }
         });
     };
     return main;
-
-
 });

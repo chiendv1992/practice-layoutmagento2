@@ -2,15 +2,20 @@
     {
         "*": {
             "OpenTechiz_Blog/js/commentajax": {
-                "AjaxUrl": "<?php echo $block->getFormAction() ?>"
+                "AjaxCommentPostUrl": "<?php echo $block->getFormAction() ?>",
+                "PostId": "<?php echo $block->getPostId() ?>",
+                "LoadUrl": "<?php echo $block->getLoadUrl() ?>"
             }
         }
     }
 </script>
-<form class="form" method="post" id="comment-form">
+<?php $helper = $this->helper('OpenTechiz\Blog\Helper\UserInfo'); ?>
+<form class="form" method="post" id="comment_ajax">
+
     <fieldset class="fieldset">
         <legend class="legend"><span><?php /* @escapeNotVerified */ echo __('Add new comment') ?></span></legend><br>
         <div class="note"></div>
+        <?php if(!$helper->isLoggedIn()) { ?>
         <div class="field required">
             <label for="author" class="label">
                 <span><?php /* @escapeNotVerified */ echo __('Name') ?></span>
@@ -22,36 +27,33 @@
                        class="input-text" width="50%">
             </div>
         </div>
-        <div class="field required">
-            <label for="email" class="label">
-                <span><?php /* @escapeNotVerified */ echo __('Email') ?></span>
-            </label>
-
-            <div class="control">
-                <input type="text" id="email"
-                       name="email"
-                       class="input-text" width="50%">
-            </div>
-        </div>
+        <?php } ?>
         <div class="field required">
             <label for="content" class="label">
                 <span><?php /* @escapeNotVerified */ echo __('Content') ?></span>
             </label>
 
             <div class="control">
-                <textarea id="content"
-                          name="content"
-                          class="input-text"></textarea>
+                <textarea id="content" name="content" class="input-text"></textarea>
             </div>
         </div>
+        <?php if(!$helper->isLoggedIn()) { ?>
+        <div class="field email required">
+            <label class="label" for="email"><span><?= $block->escapeHtml(__('Email')) ?></span></label>
+            <div class="control">
+                <input name="email" id="email" title="<?= $block->escapeHtmlAttr(__('Email')) ?>" value="<?= $block->escapeHtmlAttr($this->helper('Magento\Contact\Helper\Data')->getPostValue('email') ?: $this->helper('Magento\Contact\Helper\Data')->getUserEmail()) ?>" class="input-text" type="email" data-validate="{required:true, 'validate-email':true}"/>
+            </div>
+        </div>
+        <?php } ?>
     </fieldset>
     <input type="hidden" name="post_id" value="<?php echo $block->getPostID() ?>"/>
     <div class="actions-toolbar">
         <div class="primary">
-            <button type="submit" id="submit" title="<?php /* @escapeNotVerified */ echo __('Submit') ?>">
+            <button type="submit" class="action submit primary" title="<?php /* @escapeNotVerified */ echo __('Submit') ?>">
                 <span><?php /* @escapeNotVerified */ echo __('Submit') ?></span>
             </button>
         </div>
     </div>
 
 </form>
+

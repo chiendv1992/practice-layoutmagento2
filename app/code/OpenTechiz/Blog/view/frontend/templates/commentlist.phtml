@@ -1,6 +1,17 @@
-<H4><?php echo __('Lastest Comment For Post ID ') . $block->getPostID() ?></H4>
-<ul class="blog-post-list">
-    <?php foreach ($block->getComments() as $cmt): ?>
+<h4><?php echo __('Lastest Comment For Post ID =') . $block->getPostId() ?></h4>
+<?php
+//    print_r($block->getIdentities());
+//    die();
+?>
+<ul class="blog-comment-list">
+    <h1>Comments is active</h1>
+    <?php
+//        echo "<pre>";
+//        var_dump($block->getComments()->getData());
+//        echo "</pre>";
+        foreach ($block->getComments() as $cmt)
+        {
+    ?>
         <li class="blog-post-list-item">
             <a href=""><?php echo $cmt->getAuthor() ?></a>
 
@@ -12,6 +23,10 @@
                 <small><?php echo __('Created at: ') ?> <?php echo $cmt->getCreationTime() ?></small>
             </div>
 
+            <div class="blog-post-item-email">
+                <?php echo $cmt->getEmail() ?>
+            </div>
+
         </li>
-    <?php endforeach; ?>
+    <?php } ?>
 </ul>
