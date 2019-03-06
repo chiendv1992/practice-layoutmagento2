@@ -32,8 +32,8 @@ class Mail extends Action
 
     public function execute()
     {
-        $email = 'nhtienptit@gmail.com';
-        $name = "Tien";
+        $email = 'a@gmail.com';
+        $name = "aaaaaaaaaa";
         $this->sendEmail->approvalEmail($email, $name);
     }
 }
